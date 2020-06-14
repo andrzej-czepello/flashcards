@@ -1,2 +1,5 @@
-<h1>hello!</h1>
-<app-flashcard-create></app-flashcard-create>
+<app-header></app-header>
+<main>
+  <app-flashcard-create (flashcardCreated)="onFlashcardAdded($event)"></app-flashcard-create>
+  <app-flashcard-list></app-flashcard-list>
+</main>

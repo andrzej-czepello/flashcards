@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Flashcard } from './flashcards/flashcard.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'flashcards';
+  storedFlashcards: Flashcard[] = [];
+
+  onFlashcardAdded(flashcard) {
+    this.storedFlashcards.push(flashcard);
+  }
 }

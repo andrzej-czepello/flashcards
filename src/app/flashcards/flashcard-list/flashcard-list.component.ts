@@ -21,7 +21,7 @@ export class FlashcardListComponent implements OnInit, OnDestroy {
   constructor(public flashcardsService: FlashcardsService) { }
 
   ngOnInit() {
-    this.flashcards = this.flashcardsService.getFlashcards();
+    this.flashcardsService.getFlashcards();
     this.flashcardsService.getFlashcardsUpdateListener().subscribe((flashcards: Flashcard[]) => {
       this.flashcards = flashcards;
     });

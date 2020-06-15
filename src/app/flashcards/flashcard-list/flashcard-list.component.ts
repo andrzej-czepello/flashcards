@@ -10,11 +10,6 @@ import { Subscription } from 'rxjs';
 })
 
 export class FlashcardListComponent implements OnInit, OnDestroy {
-  // flashcards = [
-  //   { title: "Samochod", content: "Das Auto" },
-  //   { title: "Samochod", content: "Der Wagen" },
-  //   { title: "Samochod", content: "Der Last[kraft]wagen" }
-  // ];
   flashcards: Flashcard[] = [];
   private flashcardsSub: Subscription;
 
@@ -25,6 +20,10 @@ export class FlashcardListComponent implements OnInit, OnDestroy {
     this.flashcardsService.getFlashcardsUpdateListener().subscribe((flashcards: Flashcard[]) => {
       this.flashcards = flashcards;
     });
+  }
+
+  onDelete(flashcardId: string) {
+    this.flashcardsService.deleteFlashcard(flashcardId);
   }
 
   ngOnDestroy() {

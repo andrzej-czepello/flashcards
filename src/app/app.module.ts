@@ -1,3 +1,4 @@
+import { TranslationsListComponent } from './translations/translations-list/translations-list.component';
 import { DictionariesListComponent } from './dictionaries/dictionaries-list/dictionaries-list.component';
 import { FlashcardCreateComponent } from './flashcards/flashcard-create/flashcard-create.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     FlashcardListComponent,
     DictionariesListComponent,
+    TranslationsListComponent,
   ],
   imports: [
     BrowserModule,

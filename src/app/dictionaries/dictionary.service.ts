@@ -1,4 +1,4 @@
-import { Dictionary } from './../flashcards/dictionary.model';
+import { Dictionary } from './dictionary.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -50,5 +50,5 @@ export class DictionaryService {
 
     return this.dicts;
   }
-
 }
+

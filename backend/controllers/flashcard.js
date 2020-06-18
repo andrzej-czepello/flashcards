@@ -1,5 +1,6 @@
 const Flashcard = require('../models/flashcard');
 const https = require("https");
+const request = require('request');
 
 exports.createFlashcard = (req, res, next) => {
   const flashcard = new Flashcard({
@@ -31,27 +32,30 @@ exports.deleteFlashcard = (req, res, next) => {
 };
 
 exports.getDictionaries = (req, res, next) => {
-  console.log('[controller] getDictionaries');
-  https.get('https://api.pons.com/v1/dictionaries?language=pl', (resp) => {
+  const options = {
+    url: 'https://api.pons.com/v1/dictionaries?language=pl',
+    method: 'GET'
+  }
+  request(options, (error, response, body) => {
+        res.status(200).json({
+          message: "Translation received",
+          dictionaries: JSON.parse(body)
+        });
+      }
+  );
+}
 
-    let data = '';
-    let result = '';
-
-    // A chunk of data has been recieved.
-    resp.on('data', (chunk) => {
-      data += chunk;
-    });
-
-    // The whole response has been received. Print out the result.
-    resp.on('end', () => {
-      //console.log(JSON.parse(data)[1].key);
-      result = JSON.parse(data);
-      res.status(200).json({
-        message: "Dicts from PONS downloaded",
-        dictionaries: result});
-    });
-
-  }).on("error", (err) => {
-    console.log("Error: " + err.message);
-  });
+exports.getTranslation = (req, res, next) => {
+    const options = {
+    url: 'https://api.pons.com/v1/dictionary?q=samochod&l=depl',
+    method: 'GET',
+    headers: { 'X-Secret': '37cfa9fa7739677593c5a335dd174ad25838fdd558f34c4627376e0956b1f3d0'}
+  }
+  request(options, (error, response, body) => {
+        res.status(200).json({
+          message: "Translation received",
+          translations: JSON.parse(body)
+        });
+      }
+  );
 }

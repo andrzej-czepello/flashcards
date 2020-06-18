@@ -1,4 +1,4 @@
-import { Dictionary } from './dictionary.model';
+import { Dictionary } from '../dictionaries/dictionary.model';
 import { Flashcard } from './flashcard.model';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';

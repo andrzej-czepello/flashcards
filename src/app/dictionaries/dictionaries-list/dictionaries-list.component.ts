@@ -1,4 +1,4 @@
-import { Dictionary } from '../../flashcards/dictionary.model';
+import { Dictionary } from '../dictionary.model';
 import { Component, OnInit } from '@angular/core';
 import { DictionaryService } from '../dictionary.service';
 

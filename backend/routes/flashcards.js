@@ -13,4 +13,9 @@ router.post('/flashcards', flashcardsController.createFlashcard);
 // DELETE /api/flashcards/:id
  router.delete('/flashcards/:id', flashcardsController.deleteFlashcard);
 
+// DELETE /api/pons/dictionaries
+ router.get('/pons/dict', flashcardsController.getDictionaries);
+
+
+
 module.exports = router;

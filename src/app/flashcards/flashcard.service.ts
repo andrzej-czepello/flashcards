@@ -1,3 +1,4 @@
+import { Dictionary } from './dictionary.model';
 import { Flashcard } from './flashcard.model';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -8,7 +9,6 @@ import { map } from 'rxjs/operators';
 export class FlashcardsService {
   private flashcards: Flashcard[] = [];
   private flashcardsUpdated = new Subject<Flashcard[]>();
-
 
   constructor(private http: HttpClient) { }
 
@@ -53,4 +53,5 @@ export class FlashcardsService {
       this.flashcardsUpdated.next([...this.flashcards]);
     });
   }
+
 }

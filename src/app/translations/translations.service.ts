@@ -11,10 +11,7 @@ export class TranslationService {
   getTranslations(): Translation[] {
     this.http.get<{ message: string, translations: any }>('http://localhost:3000/api/pons/translation').subscribe((json) => {
 
-      // console.log(json.translations.hits.roms.headword);
-
       json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
-        // console.log(translations.header);
         arab.translations.forEach(trans => {
           const translation: Translation = { wordToTranslate: 'Auto (testowe)', suggestedWord: '', translation: '' };
 
@@ -24,21 +21,18 @@ export class TranslationService {
           this.translations.push(translation);
         });
       });
-
-      // console.log(json.translations); //dziala drukuje jsona fajnie
     });
 
     return this.translations;
   }
 
-
-
-  postTranslations(userInput: string): Translation[] {
+  postTranslations(userInput: string, languagesFromTo: string): Translation[] {
     console.log('[translation service] userInput: ' + userInput);
+    console.log('[translation service] languages: ' + languagesFromTo);
 
     this.http.post<any>(
       'http://localhost:3000/api/pons/translation',
-      { word: userInput }).subscribe((json) => {
+      { languages: languagesFromTo, word: userInput }).subscribe((json) => {
 
         json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
           arab.translations.forEach(trans => {
@@ -51,8 +45,6 @@ export class TranslationService {
           });
         });
       });
-
     return this.translations;
   }
-
 }

@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class DictionaryService {
   private dicts: Dictionary[] = [];
+  private fromLanguage: string;
+  private toLanguage: string;
 
   constructor(private http: HttpClient) { }
 
@@ -42,6 +44,18 @@ export class DictionaryService {
     });
 
     return this.dicts;
+  }
+
+  setFromLanguage(from: string) {
+    this.fromLanguage = from;
+  }
+
+  setToLanguage(to: string) {
+    this.toLanguage = to;
+  }
+
+  getFromToLanguages(): string {
+    return this.toLanguage.concat(this.fromLanguage);
   }
 }
 

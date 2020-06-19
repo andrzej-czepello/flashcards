@@ -19,7 +19,6 @@ export class TranslationService {
         arab.translations.forEach(trans => {
           const translation: Translation = { wordToTranslate: 'Auto (testowe)', suggestedWord: '', translation: '' };
 
-
           translation.suggestedWord = trans.source.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
           translation.translation = trans.target.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
 

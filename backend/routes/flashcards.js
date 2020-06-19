@@ -1,4 +1,5 @@
 const express = require('express');
+const { body } = require('express-validator');
 
 const flashcardsController = require('../controllers/flashcard');
 

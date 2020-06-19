@@ -1,5 +1,4 @@
 const Flashcard = require('../models/flashcard');
-const https = require("https");
 const request = require('request');
 
 exports.createFlashcard = (req, res, next) => {
@@ -32,9 +31,11 @@ exports.deleteFlashcard = (req, res, next) => {
 };
 
 exports.getDictionaries = (req, res, next) => {
+  // console.log("BODY:" + body);
   const options = {
-    url: 'https://api.pons.com/v1/dictionaries?language=pl',
-    method: 'GET'
+    url: 'https://api.pons.com/v1/dictionaries',
+    method: 'GET',
+    qs: {'language': 'pl'}
   }
   request(options, (error, response, body) => {
         res.status(200).json({
@@ -47,9 +48,10 @@ exports.getDictionaries = (req, res, next) => {
 
 exports.getTranslation = (req, res, next) => {
     const options = {
-    url: 'https://api.pons.com/v1/dictionary?q=samochod&l=depl',
+    url: 'https://api.pons.com/v1/dictionary',
     method: 'GET',
-    headers: { 'X-Secret': '37cfa9fa7739677593c5a335dd174ad25838fdd558f34c4627376e0956b1f3d0'}
+    headers: { 'X-Secret': '37cfa9fa7739677593c5a335dd174ad25838fdd558f34c4627376e0956b1f3d0'},
+    qs: {'l': 'depl', 'q': 'pies'}
   }
   request(options, (error, response, body) => {
         res.status(200).json({

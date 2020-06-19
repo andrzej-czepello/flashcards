@@ -1,4 +1,15 @@
 <h2>TRANSLATIONS</h2>
-<div *ngFor="let translation of translations">
-  <div>{{ translation.suggestedWord }} --- {{ translation.translation }}</div>
-</div>
+<mat-card>
+  <form (submit)="onSubmit(flashcardForm)" #flashcardForm="ngForm">
+    <mat-form-field>
+      <mat-label>Type word to search</mat-label>
+      <input matInput type="search" name="input" placeholder="eg. house" required ngModel #input="ngModel">
+      <!-- <mat-error *ngIf="userInput.invalid">type a word</mat-error> -->
+    </mat-form-field>
+    <button mat-button>Search!</button>
+  </form>
+</mat-card>
+
+<ng-container *ngFor="let translation of translations">
+  <mat-checkbox color="primary">{{ translation.suggestedWord }} --- {{ translation.translation }}</mat-checkbox><br>
+</ng-container>

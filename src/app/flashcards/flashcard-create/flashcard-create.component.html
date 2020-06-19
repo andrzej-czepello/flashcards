@@ -1,7 +1,7 @@
 <mat-card>
   <form (submit)="onAddFlashcard(flashcardForm)" #flashcardForm="ngForm">
     <mat-form-field>
-      <input matInput type="text" name="title" ngModel required required placeholder="Title" #title="ngModel">
+      <input matInput type="text" name="title" ngModel required placeholder="Title" #title="ngModel">
       <mat-error *ngIf="title.invalid">invalid name</mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -10,6 +10,5 @@
       <mat-error *ngIf="title.invalid">invalid content</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Save</button>
-
   </form>
 </mat-card>

@@ -11,6 +11,7 @@ import {
   MatToolbarModule,
   MatExpansionModule,
   MatFormFieldModule,
+  MatCheckboxModule,
 } from '@angular/material';
 
 import { MatSelectModule } from '@angular/material/select';
@@ -42,6 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     HttpClientModule,
     MatFormFieldModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

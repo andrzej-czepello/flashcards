@@ -38,13 +38,6 @@ export class DictionaryService {
         });
 
         this.dicts.push(dict);
-
-        // console.log(JSON.stringify(this.dicts));
-
-        // this.dicts.forEach(a => {
-        //   console.log(JSON.stringify(a));
-
-        // });
       });
     });
 

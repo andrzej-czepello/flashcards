@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
   private translations: Translation[] = [];
-  // private json: JSON;
 
   constructor(private http: HttpClient) { }
 
@@ -31,4 +30,29 @@ export class TranslationService {
 
     return this.translations;
   }
+
+
+
+  postTranslations(userInput: string): Translation[] {
+    console.log('[translation service] userInput: ' + userInput);
+
+    this.http.post<any>(
+      'http://localhost:3000/api/pons/translation',
+      { word: userInput }).subscribe((json) => {
+
+        json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
+          arab.translations.forEach(trans => {
+            const translation: Translation = { wordToTranslate: userInput, suggestedWord: '', translation: '' };
+
+            translation.suggestedWord = trans.source.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
+            translation.translation = trans.target.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
+
+            this.translations.push(translation);
+          });
+        });
+      });
+
+    return this.translations;
+  }
+
 }

@@ -1,5 +1,5 @@
 import { Dictionary } from '../dictionary.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DictionaryService } from '../dictionary.service';
 
 @Component({
@@ -10,8 +10,8 @@ import { DictionaryService } from '../dictionary.service';
 
 export class DictionariesListComponent implements OnInit {
   dictionaries: Dictionary[] = [];
-  fromLanguage = '';
-  toLanguage = '';
+  @Input() fromLanguage = '';
+  @Input() toLanguage = '';
   toLanguages: string[] = [];
 
   constructor(public dictionaryService: DictionaryService) { }

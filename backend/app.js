@@ -12,7 +12,6 @@ mongoose.connect("mongodb+srv://andrzej:i7uRS8uY0vE9cmXD@cluster0-zuqln.mongodb.
   })
   .catch(err => console.log(err));
 
-// app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
 
 app.use((req, res, next) => {

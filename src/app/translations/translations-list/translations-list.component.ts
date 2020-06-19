@@ -17,7 +17,7 @@ export class TranslationsListComponent implements OnInit {
 
   ngOnInit() {
     console.log('test');
-    this.translations = this.translationService.getTranslations();
+    // this.translations = this.translationService.getTranslations();
   }
 
   onSubmit(form: NgForm) {
@@ -26,7 +26,7 @@ export class TranslationsListComponent implements OnInit {
     }
     this.userInput = form.value.input;
     console.log("User input: " + this.userInput);
-    // this.translationService.getTranslations();
+    this.translations = this.translationService.postTranslations(form.value.input);
     form.resetForm();
   }
 }

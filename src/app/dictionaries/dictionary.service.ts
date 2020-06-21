@@ -54,6 +54,16 @@ export class DictionaryService {
     this.toLanguage = to;
   }
 
+  getFromLanguage(): string {
+    return this.fromLanguage;
+  }
+
+
+  getToLanguage(): string {
+    return this.toLanguage;
+  }
+
+
   getFromToLanguages(): string {
     return this.toLanguage.concat(this.fromLanguage);
   }

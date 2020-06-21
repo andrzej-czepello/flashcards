@@ -22,3 +22,5 @@ export class FlashcardCreateComponent {
     form.resetForm();
   }
 }
+
+

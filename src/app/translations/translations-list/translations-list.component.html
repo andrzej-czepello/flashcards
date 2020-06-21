@@ -11,5 +11,12 @@
 </mat-card>
 
 <ng-container *ngFor="let translation of translations">
-  <mat-checkbox color="primary">{{ translation.suggestedWord }} --- {{ translation.translation }}</mat-checkbox><br>
+  <mat-checkbox color="primary" required ngModel #translation="ngModel" [checked]="translation.isChecked"
+    (change)="translation.isChecked = !translation.isChecked">
+    {{ translation.suggestedWord }} ---
+    {{ translation.translation }} </mat-checkbox><br>
 </ng-container>
+
+<br>
+
+<button mat-raised-button color="primary" (click)="createFlashcards()">Create flashcard(s)</button>

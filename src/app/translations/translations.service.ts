@@ -13,7 +13,7 @@ export class TranslationService {
 
       json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
         arab.translations.forEach(trans => {
-          const translation: Translation = { wordToTranslate: 'Auto (testowe)', suggestedWord: '', translation: '' };
+          const translation: Translation = { wordToTranslate: 'Auto (testowe)', suggestedWord: '', translation: '', isChecked: false };
 
           translation.suggestedWord = trans.source.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
           translation.translation = trans.target.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
@@ -36,7 +36,7 @@ export class TranslationService {
 
         json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
           arab.translations.forEach(trans => {
-            const translation: Translation = { wordToTranslate: userInput, suggestedWord: '', translation: '' };
+            const translation: Translation = { wordToTranslate: userInput, suggestedWord: '', translation: '', isChecked: false };
 
             translation.suggestedWord = trans.source.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
             translation.translation = trans.target.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');

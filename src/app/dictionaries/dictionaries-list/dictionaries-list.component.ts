@@ -13,6 +13,7 @@ export class DictionariesListComponent implements OnInit {
   @Input() fromLanguage = '';
   @Input() toLanguage = '';
   toLanguages: string[] = [];
+  translationKey = '';
 
   constructor(public dictionaryService: DictionaryService) { }
 
@@ -26,14 +27,15 @@ export class DictionariesListComponent implements OnInit {
     console.log('[dictionary component] from: ' + this.fromLanguage);
 
     if (this.fromLanguage !== '---') {
-      this.toLanguages = this.dictionaries.find(x => x.languageFrom === this.fromLanguage).languageTo;
+      this.toLanguages = this.dictionaries.find(x => x.languageFrom === this.fromLanguage).languageTo.map(el => el.to);
     }
   }
 
   selectLanguagesToHandler(event: any) {
     this.toLanguage = event.target.value;
-    console.log('[dictionary component] to: ' + this.fromLanguage);
+    console.log('[dictionary component] to: ' + this.toLanguage);
     this.dictionaryService.setToLanguage(event.target.value);
+    this.translationKey = this.dictionaries.find(x => x.languageTo.map(el => el.to === this.toLanguage)).translationKey;
   }
 }
 

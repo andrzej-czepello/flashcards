@@ -17,9 +17,6 @@ router.post('/flashcards', flashcardsController.createFlashcard);
 // GET /api/pons/dictionaries
  router.get('/pons/dict', flashcardsController.getDictionaries);
 
-//  // GET /api/pons/translations
-// router.get('/pons/translation', flashcardsController.getTranslation);
-
  // POST /api/pons/translations
 router.post('/pons/translation', flashcardsController.postTranslation);
 

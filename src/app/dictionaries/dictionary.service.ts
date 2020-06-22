@@ -28,18 +28,23 @@ export class DictionaryService {
   getDicts(): Dictionary[] {
     this.http.get<{ message: string, dictionaries: any }>('http://localhost:3000/api/pons/dict').subscribe((json) => {
       json.dictionaries.forEach(element => {
-        const langFrom = element.languages[0]; // de
+        const langFrom = element.languages[0]; // el
+        const dict: Dictionary = { languageFrom: '', languageTo: [{ to: '', key: '' }], translationKey: '' };
 
-        const dict: Dictionary = { languageFrom: '', languageTo: [] };
-        dict.languageFrom = langFrom;
+        const isDictInList = this.dicts.find(e => e.languageFrom === langFrom);
 
-        json.dictionaries.forEach(language => {
-          if (language.languages[0] === langFrom) {
-            dict.languageTo.push(language.languages[1]);
-          }
-        });
+        if (!isDictInList) {
+          dict.languageFrom = langFrom;
+          json.dictionaries.forEach(language => {
+            if (language.languages[0] === langFrom) {
+              dict.languageTo.push({ to: language.languages[1], key: language.key });
+            } else if (language.languages[1] === langFrom) {
+              dict.languageTo.push({ to: language.languages[0], key: language.key });
+            }
+          });
 
-        this.dicts.push(dict);
+          this.dicts.push(dict);
+        }
       });
     });
 
@@ -58,14 +63,13 @@ export class DictionaryService {
     return this.fromLanguage;
   }
 
-
   getToLanguage(): string {
     return this.toLanguage;
   }
 
-
   getFromToLanguages(): string {
-    return this.toLanguage.concat(this.fromLanguage);
+
+    return this.getDicts().find(x => x.languageFrom === this.fromLanguage).languageTo.find(x => x.to === this.toLanguage).key;
   }
 }
 

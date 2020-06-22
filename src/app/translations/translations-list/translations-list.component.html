@@ -13,8 +13,7 @@
 <ng-container *ngFor="let translation of translations">
   <mat-checkbox color="primary" required ngModel #translation="ngModel" [checked]="translation.isChecked"
     (change)="translation.isChecked = !translation.isChecked">
-    {{ translation.suggestedWord }} ---
-    {{ translation.translation }} </mat-checkbox><br>
+    {{ translation.suggestedWord }} --- {{ translation.translation }} </mat-checkbox><br>
 </ng-container>
 
 <br>

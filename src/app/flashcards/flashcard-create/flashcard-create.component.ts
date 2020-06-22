@@ -12,6 +12,7 @@ export class FlashcardCreateComponent {
   enteredContent = '';
 
   constructor(public flashcardsService: FlashcardsService) { }
+
   onAddFlashcard(form: NgForm) {
     if (form.invalid) {
       return;
@@ -21,3 +22,5 @@ export class FlashcardCreateComponent {
     form.resetForm();
   }
 }
+
+

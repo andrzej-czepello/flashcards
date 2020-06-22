@@ -1,8 +1,20 @@
+import { TranslationsListComponent } from './translations/translations-list/translations-list.component';
+import { DictionariesListComponent } from './dictionaries/dictionaries-list/dictionaries-list.component';
 import { FlashcardCreateComponent } from './flashcards/flashcard-create/flashcard-create.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule } from '@angular/material';
+import {
+  MatInputModule,
+  MatCardModule,
+  MatButtonModule,
+  MatToolbarModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatCheckboxModule,
+} from '@angular/material';
+
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     FlashcardCreateComponent,
     HeaderComponent,
     FlashcardListComponent,
+    DictionariesListComponent,
+    TranslationsListComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +40,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule
+    MatSelectModule,
+    HttpClientModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,34 +1,33 @@
 const express = require('express');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
+
+const flashcardRoutes = require('./routes/flashcards');
 
 const app = express();
 
-app.use(bodyParser.json());
+mongoose.connect("mongodb+srv://andrzej:i7uRS8uY0vE9cmXD@cluster0-zuqln.mongodb.net/node-angular?retryWrites=true&w=majority")
+  .then(result => {
+    app.listen(8080);
+  })
+  .catch(err => console.log(err));
+
+app.use(bodyParser.json()); // application/json
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', "*");
-  res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
-  res.setHeader('Access-Control-Allow-Methods', "GET, POST, PATCH, DELETE, OPTIONS");
-  next();
-})
-
-app.post("/api/flashcards", (req, res, next) => {
-  const flashcards = req.body;
-
-  res.status(201).json({
-    message: "flashcard added sucessfully"
-  })
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
 });
 
-app.get('/api/flashcards', (req, res, next) => {
-  const flashcards = [
-    { id: "1", title: "flashcard title_1", content: "content_1"},
-    { id: "2", title: "flashcard title_2", content: "content_2"}
-  ]
-  res.status(200).json({
-    message: 'Flashcard fetched succesfully!',
-    flashcards: flashcards
-  });
+app.use('/api', flashcardRoutes);
+
+app.use((error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  res.status(status).json({ message: message });
 });
 
 module.exports = app;

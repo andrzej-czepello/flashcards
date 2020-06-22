@@ -1,0 +1,28 @@
+<h4>Choose translation languages</h4>
+
+<form>
+  <mat-form-field>
+    <mat-label>From:</mat-label>
+    <select matNativeControl required (change)="selectLanguageFromHandler($event)">
+      <option> --- </option>
+      <option *ngFor="let dict of dictionaries">
+        {{ dict.languageFrom }}
+      </option>
+    </select>
+  </mat-form-field>
+</form>
+
+<form>
+  <mat-form-field>
+    <mat-label>To:</mat-label>
+    <select matNativeControl required (change)="selectLanguagesToHandler($event)">
+      <option> --- </option>
+      <option *ngFor="let language of toLanguages">
+        {{ language }}
+      </option>
+    </select>
+  </mat-form-field>
+</form>
+
+
+<div *ngIf="toLanguages && fromLanguage">{{fromLanguage}} - {{toLanguage}}</div>

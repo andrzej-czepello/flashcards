@@ -26,20 +26,23 @@ export class TranslationsListComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(form: NgForm) {
+  onSearchButton(form: NgForm) {
+    this.translations.length = 0;
     if (form.invalid) {
       return;
     }
     this.userInput = form.value.input;
     console.log('User input: ' + this.userInput);
     this.languagesFromTo = this.dictionaryService.getFromToLanguages();
-    this.translations = this.translationService.postTranslations(this.userInput, this.languagesFromTo);
-    this.translation = form.value.translation;
-    console.log('[Translation component] translation1: ' + this.translation);
+    this.translationService.postTranslations(this.userInput, this.languagesFromTo).subscribe(translations => {
+      this.translation = form.value;
+      this.translations = translations;
+    });
+
     form.resetForm();
   }
 
-  createFlashcards() {
+  onCreateFlashcardsButton(form: NgForm) {
     this.translations.forEach(translation => {
       if (translation.isChecked) {
         this.flashcardService.addFlashcard(translation.suggestedWord, translation.translation);

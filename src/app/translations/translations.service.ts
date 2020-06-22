@@ -1,6 +1,7 @@
 import { Translation } from './translation.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
@@ -8,7 +9,7 @@ export class TranslationService {
 
   constructor(private http: HttpClient) { }
 
-  postTranslations(userInput: string, languagesFromTo: string): Translation[] {
+  postTranslations(userInput: string, languagesFromTo: string): Observable<Translation[]> {
 
     this.http.post<any>(
       'http://localhost:3000/api/pons/translation',
@@ -32,6 +33,6 @@ export class TranslationService {
           });
         });
       });
-    return this.translations;
+    return of(this.translations);
   }
 }

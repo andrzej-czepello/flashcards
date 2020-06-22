@@ -14,24 +14,28 @@ export class TranslationService {
     this.http.post<any>(
       'http://localhost:3000/api/pons/translation',
       { languages: languagesFromTo, word: userInput }).subscribe((json) => {
+        const isNoTranslation = json == null;
+        if (isNoTranslation) {
+          this.translations.length = 0;
+        } else {
+          json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
+            arab.translations.forEach(trans => {
+              const translation: Translation = {
+                wordToTranslate: userInput,
+                suggestedWord: '',
+                translation: '',
+                isChecked: false,
+                languageFrom: languagesFromTo.substring(0, 2),
+                languageTo: languagesFromTo.substring(2, 4),
+              };
 
-        json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
-          arab.translations.forEach(trans => {
-            const translation: Translation = {
-              wordToTranslate: '',
-              suggestedWord: '',
-              translation: '',
-              isChecked: false,
-              languageFrom: '',
-              languageTo: ''
-            };
+              translation.suggestedWord = trans.source.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
+              translation.translation = trans.target.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
 
-            translation.suggestedWord = trans.source.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
-            translation.translation = trans.target.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
-
-            this.translations.push(translation);
+              this.translations.push(translation);
+            });
           });
-        });
+        }
       });
     return of(this.translations);
   }

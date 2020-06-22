@@ -56,12 +56,19 @@ exports.postTranslation = (req, res, next) => {
     headers: { 'X-Secret': '37cfa9fa7739677593c5a335dd174ad25838fdd558f34c4627376e0956b1f3d0'},
     qs: {'l': req.body.languages, 'q': req.body.word}
   }
-  request(options, (error, response, body) => {
+
+    request(options, (error, response, body) => {
+      if(body){
         res.status(200).json({
-          message: "Translation received",
+          message: "Translations received",
           translations: JSON.parse(body)
-        });
-      }
+      });
+    }else{
+       res.status(204).json({
+          message: "No translations available",
+          translations: []
+      });
+    }}
   );
 }
 

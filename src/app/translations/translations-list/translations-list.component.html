@@ -12,10 +12,20 @@
 
 <br>
 
-<ng-container *ngFor="let translation of translations; let i = index">
-  <mat-checkbox name="translationCheckbox-{{i}}" color="primary" required ngModel #translation="ngModel"
-    [checked]="translation.isChecked" (change)="translation.isChecked = !translation.isChecked">
-    {{ translation.suggestedWord }} --- {{ translation.translation }} </mat-checkbox>
-  <br>
+<ng-container *ngIf="translations.length > 0; else elseTemplate">
+  <ng-container *ngFor="let translation of translations; let i = index">
+    <mat-checkbox name="translationCheckbox-{{i}}" color="primary" required ngModel #translation="ngModel"
+      [checked]="translation.isChecked" (change)="translation.isChecked = !translation.isChecked">
+      {{ translation.suggestedWord }} --- {{ translation.translation }} </mat-checkbox>
+    <br>
+  </ng-container>
+  <button mat-raised-button color="primary" (click)="onCreateFlashcardsButton()">Create flashcard(s)</button>
 </ng-container>
-<button mat-raised-button color="primary" (click)="onCreateFlashcardsButton()">Create flashcard(s)</button>
+<ng-template #elseTemplate>
+  <ng-container *ngIf="isFirstTranslation; else noTranslationTemplate">
+    Here you will find your translations. Choose translation languages, put a word and hit search button
+  </ng-container>
+  <ng-template #noTranslationTemplate>
+    No translations found for: {{ userInput }}. Try something different
+  </ng-template>
+</ng-template>

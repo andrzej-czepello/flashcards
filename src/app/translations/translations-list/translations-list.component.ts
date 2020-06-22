@@ -12,18 +12,20 @@ import { NgForm } from '@angular/forms';
 })
 
 export class TranslationsListComponent implements OnInit {
+  translation: string;
   translations: Translation[] = [];
   userInput: string;
-  translation: string;
   languagesFromTo: string;
   checkedTranslations: Translation[] = [];
   isChecked: boolean;
+  isFirstTranslation: boolean;
 
   constructor(private translationService: TranslationService,
     private dictionaryService: DictionaryService,
     private flashcardService: FlashcardsService) { }
 
   ngOnInit() {
+    this.isFirstTranslation = true;
   }
 
   onSearchButton(form: NgForm) {
@@ -38,7 +40,7 @@ export class TranslationsListComponent implements OnInit {
       this.translation = form.value;
       this.translations = translations;
     });
-
+    this.isFirstTranslation = false;
     form.resetForm();
   }
 

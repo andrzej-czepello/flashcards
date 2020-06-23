@@ -1,11 +1,13 @@
 <!-- <mat-toolbar color="primary"> My Flashcards</mat-toolbar> -->
 
 
-<mat-toolbar color="primary">
-  <a routerLink="/flashcards">My saved flashcards</a>
+<mat-toolbar class="main" color="primary">
+  <span>
+    <a mat-button routerLink="/flashcards" routerLinkActive="mat-accent">My saved flashcards</a>
+  </span>
   <ul>
     <li>
-      <a routerLink="/create">Create new flashcard</a>
+      <a mat-button routerLink="/create" routerLinkActive="mat-accent">Create new flashcard</a>
     </li>
   </ul>
 </mat-toolbar>

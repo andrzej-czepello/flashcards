@@ -1,7 +1,7 @@
 <h4>Choose translation languages</h4>
 
 <form>
-  <mat-form-field>
+  <mat-form-field class="languageFrom">
     <mat-label>From:</mat-label>
     <select matNativeControl required (change)="selectLanguageFromHandler($event)">
       <option> --- </option>
@@ -10,10 +10,8 @@
       </option>
     </select>
   </mat-form-field>
-</form>
-
-<form>
-  <mat-form-field>
+  « »
+  <mat-form-field class="languageTo">
     <mat-label>To:</mat-label>
     <select matNativeControl required (change)="selectLanguagesToHandler($event)">
       <option> --- </option>
@@ -23,6 +21,5 @@
     </select>
   </mat-form-field>
 </form>
-
 
 <div *ngIf="toLanguages && fromLanguage">{{fromLanguage}} - {{toLanguage}}</div>

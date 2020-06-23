@@ -1,11 +1,13 @@
 <mat-card>
-  <form (submit)="onAddFlashcard(flashcardForm)" #flashcardForm="ngForm">
+  <form (submit)="onSaveFlashcard(flashcardForm)" #flashcardForm="ngForm">
     <mat-form-field>
-      <input matInput type="text" name="title" ngModel required placeholder="Title" #title="ngModel">
+      <input matInput type="text" name="title" [ngModel]="flashcard?.title" required placeholder="Title"
+        #title="ngModel">
       <mat-error *ngIf="title.invalid">invalid name</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput rows="3" name="content" ngModel required placeholder="Content" #content="ngModel">
+      <textarea matInput rows="3" name="content" [ngModel]="flashcard?.content" required placeholder="Content"
+        #content="ngModel">
     </textarea>
       <mat-error *ngIf="title.invalid">invalid content</mat-error>
     </mat-form-field>

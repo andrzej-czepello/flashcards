@@ -47,12 +47,27 @@ export class FlashcardsService {
     });
   }
 
+  updateFlashcard(id: string, title: string, content: string) { //TODO refactor (delete) oldFlashcardIndex
+    const flashcard: Flashcard = { id: id, title: title, content: content, userInput: '' };
+    this.http.put('http://localhost:3000/api/flashcards/' + id, flashcard).subscribe(response => {
+      const updatedFlashcards = [...this.flashcards];
+      const oldFlashcardIndex = updatedFlashcards.findIndex(f => f.id === flashcard.id);
+      updatedFlashcards[oldFlashcardIndex] = flashcard;
+      this.flashcards = updatedFlashcards;
+      this.flashcardsUpdated.next([...this.flashcards]);
+    });
+  }
+
   deleteFlashcard(flashcardId: string) {
     this.http.delete('http://localhost:3000/api/flashcards/' + flashcardId).subscribe(() => {
       const updatedFlashcards = this.flashcards.filter(flashcard => flashcard.id !== flashcardId);
       this.flashcards = updatedFlashcards;
       this.flashcardsUpdated.next([...this.flashcards]);
     });
+  }
+
+  getFlashcard(flashcardId: string) {
+    return this.http.get<{ _id: string, title: string, content: string }>('http://localhost:3000/api/flashcards/' + flashcardId);
   }
 
   // editFlashcard(flashcardId: string, flashcardToEdit: Flashcard) {

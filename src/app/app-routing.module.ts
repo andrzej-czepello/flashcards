@@ -10,7 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: 'create', component: SearchModuleComponent },
   { path: 'flashcards', component: FlashcardModuleComponent },
-
+  { path: 'edit/:flashcardId', component: FlashcardModuleComponent },
 ];
 
 @NgModule({

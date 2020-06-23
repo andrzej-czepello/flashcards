@@ -6,7 +6,7 @@
     <p><b>Translation: </b> {{ flashcard.content }}</p>
     <p>Original search: {{ flashcard.userInput }}</p>
     <mat-action-row>
-      <button mat-button color="primary">EDIT</button>
+      <a mat-button color="primary" [routerLink]="['/edit', flashcard.id]">EDIT</a>
       <button mat-button color="warn" (click)="onDelete(flashcard.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>

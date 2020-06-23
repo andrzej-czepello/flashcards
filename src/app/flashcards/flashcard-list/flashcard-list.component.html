@@ -1,9 +1,10 @@
 <mat-accordion multi="true" *ngIf="flashcards.length > 0">
   <mat-expansion-panel *ngFor="let flashcard of flashcards">
     <mat-expansion-panel-header>
-      {{ flashcard.title }}
+      <p><b>Title: </b> {{ flashcard.title }} </p>
     </mat-expansion-panel-header>
-    <p>{{ flashcard.content }}</p>
+    <p><b>Translation: </b> {{ flashcard.content }}</p>
+    <p>Original search: {{ flashcard.userInput }}</p>
     <mat-action-row>
       <button mat-button color="primary">EDIT</button>
       <button mat-button color="warn" (click)="onDelete(flashcard.id)">DELETE</button>

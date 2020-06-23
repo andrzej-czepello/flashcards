@@ -22,6 +22,7 @@ export class FlashcardsService {
           return {
             title: flashcard.title,
             content: flashcard.content,
+            userInput: flashcard.userInput,
             id: flashcard._id
           };
         });
@@ -36,8 +37,8 @@ export class FlashcardsService {
     return this.flashcardsUpdated.asObservable();
   }
 
-  addFlashcard(title: string, content: string) {
-    const flashcard: Flashcard = { id: null, title, content };
+  addFlashcard(title: string, content: string, userInput: string) {
+    const flashcard: Flashcard = { id: null, title, content, userInput };
     this.http.post<{ message: string, flashcardId: string }>('http://localhost:3000/api/flashcards', flashcard).subscribe(responseData => {
       const id = responseData.flashcardId;
       flashcard.id = id;
@@ -53,5 +54,14 @@ export class FlashcardsService {
       this.flashcardsUpdated.next([...this.flashcards]);
     });
   }
+
+  // editFlashcard(flashcardId: string, flashcardToEdit: Flashcard) {
+  //   this.http.put<Flashcard>('http://localhost:3000/api/flashcards/' + flashcardId, flashcardToEdit)
+  //     .subscribe(() => {
+  //       const updatedFlashcards = this.flashcards.filter(flashcard => flashcard.id !== flashcardId);
+  //       this.flashcards = updatedFlashcards;
+  //       this.flashcardsUpdated.next([...this.flashcards]);
+  //     });
+  // }
 
 }

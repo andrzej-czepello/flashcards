@@ -11,7 +11,8 @@
 </mat-card>
 
 <br>
-
+<h2 *ngIf="languagesFromTo">Results for word: <b>{{ userInput }}</b></h2>
+<br>
 <ng-container *ngIf="translations.length > 0; else elseTemplate">
   <ng-container *ngFor="let translation of translations; let i = index">
     <mat-checkbox name="translationCheckbox-{{i}}" color="primary" required ngModel #translation="ngModel"
@@ -19,6 +20,7 @@
       {{ translation.suggestedWord }} --- {{ translation.translation }} </mat-checkbox>
     <br>
   </ng-container>
+  <br>
   <button mat-raised-button color="primary" (click)="onCreateFlashcardsButton()">Create flashcard(s)</button>
 </ng-container>
 <ng-template #elseTemplate>

@@ -21,7 +21,7 @@ export class TranslationService {
           json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
             arab.translations.forEach(trans => {
               const translation: Translation = {
-                wordToTranslate: userInput,
+                userInputToSearch: userInput,
                 suggestedWord: '',
                 translation: '',
                 isChecked: false,

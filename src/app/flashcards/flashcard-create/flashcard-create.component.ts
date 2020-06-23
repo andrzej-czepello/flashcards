@@ -18,7 +18,7 @@ export class FlashcardCreateComponent {
       return;
     }
 
-    this.flashcardsService.addFlashcard(form.value.title, form.value.content);
+    this.flashcardsService.addFlashcard(form.value.title, form.value.content, '');
     form.resetForm();
   }
 }

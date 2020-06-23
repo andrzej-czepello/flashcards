@@ -2,6 +2,7 @@ import { Flashcard } from './../flashcard.model';
 import { FlashcardsService } from './../flashcard.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class FlashcardListComponent implements OnInit, OnDestroy {
   flashcards: Flashcard[] = [];
   private flashcardsSub: Subscription;
 
-  constructor(public flashcardsService: FlashcardsService) { }
+  constructor(public flashcardsService: FlashcardsService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.flashcardsService.getFlashcards();
@@ -24,9 +25,17 @@ export class FlashcardListComponent implements OnInit, OnDestroy {
 
   onDelete(flashcardId: string) {
     this.flashcardsService.deleteFlashcard(flashcardId);
+    this.snackBar.open('Flashcard deleted!', 'Close', {
+      duration: 2000,
+      panelClass: 'mat-primary'
+    });
   }
 
+  // onEdit(flashcardId: string, flashcardToEdit: Flashcard) {
+  //   this.flashcardsService.editFlashcard(flashcardId, flashcardToEdit);
+  // }
+
   ngOnDestroy() {
-    this.flashcardsSub.unsubscribe();
+    // this.flashcardsSub.unsubscribe();
   }
 }

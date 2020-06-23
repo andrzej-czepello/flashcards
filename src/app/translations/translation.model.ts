@@ -1,5 +1,6 @@
 export interface Translation {
-  wordToTranslate: string;
+  // wordToTranslate: string;
+  userInputToSearch: string;
   suggestedWord: string;
   translation: string;
   isChecked: boolean;

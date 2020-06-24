@@ -6,6 +6,7 @@
       <input matInput type="search" name="input" placeholder="eg. house" required ngModel #input="ngModel">
     </mat-form-field>
     <button mat-raised-button color="primary">Search!</button>
+    <mat-error *ngIf="languagesFromTo === ''">Please first choose languages</mat-error>
   </form>
 </mat-card>
 

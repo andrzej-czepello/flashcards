@@ -3,8 +3,8 @@
 <form>
   <mat-form-field class="languageFrom">
     <mat-label>From:</mat-label>
-    <select matNativeControl required (change)="selectLanguageFromHandler($event)">
-      <option> --- </option>
+    <select matNativeControl (change)="selectLanguageFromHandler($event)" ng-model="drp1Value">
+      <option [ngValue]="null">-----</option>
       <option *ngFor="let dict of dictionaries">
         {{ dict.languageFrom }}
       </option>
@@ -13,8 +13,8 @@
   « »
   <mat-form-field class="languageTo">
     <mat-label>To:</mat-label>
-    <select matNativeControl required (change)="selectLanguagesToHandler($event)">
-      <option> --- </option>
+    <select matNativeControl (change)="selectLanguagesToHandler($event)" ng-disabled="drp1Value == null">
+      <option [ngValue]="null">-----</option>
       <option *ngFor="let language of toLanguages">
         {{ language }}
       </option>
@@ -22,4 +22,4 @@
   </mat-form-field>
 </form>
 
-<div *ngIf="toLanguages && fromLanguage">{{fromLanguage}} - {{toLanguage}}</div>
+<!-- <div *ngIf="toLanguages && fromLanguage">{{fromLanguage}} - {{toLanguage}}</div> -->

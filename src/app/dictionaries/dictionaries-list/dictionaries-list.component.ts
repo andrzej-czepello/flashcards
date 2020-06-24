@@ -26,16 +26,23 @@ export class DictionariesListComponent implements OnInit {
     this.fromLanguage = event.target.value;
     console.log('[dictionary component] from: ' + this.fromLanguage);
 
-    if (this.fromLanguage !== '---') {
+    if (this.fromLanguage !== '-----') {
       this.toLanguages = this.dictionaries.find(x => x.languageFrom === this.fromLanguage).languageTo.map(el => el.to);
+    } else {
+      this.dictionaryService.setToLanguage(null);
     }
   }
 
   selectLanguagesToHandler(event: any) {
     this.toLanguage = event.target.value;
-    console.log('[dictionary component] to: ' + this.toLanguage);
-    this.dictionaryService.setToLanguage(event.target.value);
-    this.translationKey = this.dictionaries.find(x => x.languageTo.map(el => el.to === this.toLanguage)).translationKey;
+    if (this.fromLanguage !== '-----') {
+      console.log('[dictionary component] to: ' + this.toLanguage);
+      this.dictionaryService.setToLanguage(event.target.value);
+      this.translationKey = this.dictionaries.find(x => x.languageTo.map(el => el.to === this.toLanguage)).translationKey;
+      console.log('[dictionary component] key: ' + this.translationKey);
+    } else {
+      this.dictionaryService.setToLanguage(null);
+    }
   }
 }
 

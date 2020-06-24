@@ -10,21 +10,6 @@ export class DictionaryService {
 
   constructor(private http: HttpClient) { }
 
-  // [
-  //   {
-  //     key: 'deel',
-  //     simple_label: 'grecki «» niemiecki',
-  //     directed_label: { elde: 'grecko » niemiecki', deel: 'niemiecko » grecki' },
-  //     languages: ['el', 'de']
-  //   },
-  //   {
-  //     key: 'deen',
-  //     simple_label: 'angielski «» niemiecki',
-  //     directed_label: { ende: 'angielsko » niemiecki', deen: 'niemiecko » angielski' },
-  //     languages: ['en', 'de']
-  //   },
-  //   ...
-  // ]
   getDicts(): Dictionary[] {
     this.http.get<{ message: string, dictionaries: any }>('http://localhost:3000/api/pons/dict').subscribe((json) => {
       json.dictionaries.forEach(element => {
@@ -36,19 +21,34 @@ export class DictionaryService {
         if (!isDictInList) {
           dict.languageFrom = langFrom;
           json.dictionaries.forEach(language => {
-            if (language.languages[0] === langFrom) {
+            if (this.isSearchedLanguageFrom(language.languages[0], langFrom) &&
+              this.isLanguageToKeyIsValid(language.key) && language.languages[1]) {
+              console.log("Key: " + language.languages[1] + ' ' + language.key)
               dict.languageTo.push({ to: language.languages[1], key: language.key });
-            } else if (language.languages[1] === langFrom) {
+            } else if (language.languages[1] === langFrom && this.isLanguageToKeyIsValid(language.key) && language.languages[1]) {
               dict.languageTo.push({ to: language.languages[0], key: language.key });
             }
           });
 
+          dict.languageTo = this.removeEmptyLanguageTo(dict);
           this.dicts.push(dict);
         }
       });
     });
 
     return this.dicts;
+  }
+
+  private isLanguageToKeyIsValid(key: string) {
+    const keyLength = 4;
+    return key.length === keyLength;
+  }
+  private isSearchedLanguageFrom(lang1: string, lang2: string): boolean {
+    return lang1 === lang2;
+  }
+
+  private removeEmptyLanguageTo(dict: Dictionary) {
+    return dict.languageTo.filter(e => e.to !== '');
   }
 
   setFromLanguage(from: string) {
@@ -68,8 +68,11 @@ export class DictionaryService {
   }
 
   getFromToLanguages(): string {
-
-    return this.getDicts().find(x => x.languageFrom === this.fromLanguage).languageTo.find(x => x.to === this.toLanguage).key;
+    if (this.toLanguage && this.fromLanguage) {
+      return this.getDicts().find(x => x.languageFrom === this.fromLanguage).languageTo.find(x => x.to === this.toLanguage).key;
+    } else {
+      return '';
+    }
   }
 }
 

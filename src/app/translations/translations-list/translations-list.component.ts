@@ -35,14 +35,16 @@ export class TranslationsListComponent implements OnInit {
     }
     this.userInput = form.value.input;
     this.languagesFromTo = this.dictionaryService.getFromToLanguages();
-    this.isLoading = true;
-    this.translationService.postTranslations(this.userInput, this.languagesFromTo).subscribe(translations => {
-      this.isLoading = false;
-      this.translation = form.value;
-      this.translations = translations;
-    });
-    this.isFirstTranslation = false;
-    form.resetForm();
+    if (this.languagesFromTo !== '') {
+      this.isLoading = true;
+      this.translationService.postTranslations(this.userInput, this.languagesFromTo).subscribe(translations => {
+        this.isLoading = false;
+        this.translation = form.value;
+        this.translations = translations;
+      });
+      this.isFirstTranslation = false;
+      form.resetForm();
+    }
   }
 
   onCreateFlashcardsButton() {

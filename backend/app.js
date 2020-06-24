@@ -31,26 +31,4 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message });
 });
 
-app.get("/api/flashcards/:id", (req, res, next) => {
-  Flashcard.findById(req.params.id).then(flashcard => {
-    if (flashcard) {
-      res.status(200).json(flashcard);
-    } else {
-      res.status(404).json({message: "Flashcard not found!"});
-    }
-  })
-})
-
-app.put("/api/flashcards/:id", (req, res, next) => {
-  const flashcard = new Flashcard({
-    _id: req.body.id,
-    title: req.body.title,
-    content: req.body.content,
-    userInput: ''
-  });
-  Flashcard.updateOne({_id: req.params.id}, flashcard).then(result => {
-    res.status(200).json({message: "Update successful"});
-  });
-});
-
 module.exports = app;

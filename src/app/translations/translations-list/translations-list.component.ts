@@ -21,11 +21,9 @@ export class TranslationsListComponent implements OnInit {
   checkedTranslations: Translation[] = [];
   isChecked: boolean;
   isFirstTranslation: boolean;
+  isLoading = false;
 
-  constructor(private translationService: TranslationService,
-    private dictionaryService: DictionaryService,
-    private flashcardService: FlashcardsService,
-    private snackBar: MatSnackBar) { }
+  constructor(private translationService: TranslationService, private dictionaryService: DictionaryService, private flashcardService: FlashcardsService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.isFirstTranslation = true;
@@ -37,7 +35,9 @@ export class TranslationsListComponent implements OnInit {
     }
     this.userInput = form.value.input;
     this.languagesFromTo = this.dictionaryService.getFromToLanguages();
+    this.isLoading = true;
     this.translationService.postTranslations(this.userInput, this.languagesFromTo).subscribe(translations => {
+      this.isLoading = false;
       this.translation = form.value;
       this.translations = translations;
     });

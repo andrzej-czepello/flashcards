@@ -28,7 +28,7 @@ export class TranslationService {
                 languageTo: languagesFromTo.substring(2, 4),
               };
 
-              translation.suggestedWord = this.removeHTMLfromJSON(trans.source)
+              translation.suggestedWord = this.removeHTMLfromJSON(trans.source);
               translation.translation = this.removeHTMLfromJSON(trans.target);
 
               this.translations.push(translation);

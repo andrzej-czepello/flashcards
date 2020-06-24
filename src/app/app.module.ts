@@ -14,7 +14,8 @@ import {
   MatExpansionModule,
   MatFormFieldModule,
   MatCheckboxModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 
 import { MatSelectModule } from '@angular/material/select';
@@ -52,6 +53,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatFormFieldModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

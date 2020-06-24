@@ -1,5 +1,6 @@
 <mat-card>
-  <form (submit)="onSaveFlashcard(flashcardForm)" #flashcardForm="ngForm">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSaveFlashcard(flashcardForm)" #flashcardForm="ngForm" *ngIf="!isLoading">
     <mat-form-field>
       <input matInput type="text" name="title" [ngModel]="flashcard?.title" required placeholder="Title"
         #title="ngModel">

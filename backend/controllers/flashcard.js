@@ -48,10 +48,6 @@ exports.getDictionaries = (req, res, next) => {
 }
 
 exports.postTranslation = (req, res, next) => {
-
-  // console.log("[controller] req.body.word:" + req.body.word);
-  // console.log("[controller] req.body.lang:" + req.body.languages);
-
     const options = {
     url: 'https://api.pons.com/v1/dictionary',
     method: 'GET',
@@ -59,55 +55,40 @@ exports.postTranslation = (req, res, next) => {
     qs: {'l': req.body.languages, 'q': req.body.word}
   }
 
-    request(options, (error, response, body) => {
-      if(body){
-        res.status(200).json({
-          message: "Translations received",
-          translations: JSON.parse(body)
-      });
+  request(options, (error, response, body) => {
+    if(body){
+      res.status(200).json({
+        message: "Translations received",
+        translations: JSON.parse(body)
+    });
     }else{
-       res.status(204).json({
-          message: "No translations available",
-          translations: []
-      });
+      res.status(204).json({
+        message: "No translations available",
+        translations: []
+    });
     }}
   );
 }
 
-// exports.editFlashcard = (req, res, next) => {
-//   const flashcardId = req.params.id;
-//   const title = req.body.title;
-//   const content = req.body.content;
-//   const userInput = req.body.userInput;
+exports.getFlashcard = (req, res, next) => {
+  Flashcard.findById(req.params.id).then(flashcard => {
+    if (flashcard) {
+      res.status(200).json(flashcard);
+    } else {
+      res.status(404).json({message: "Flashcard not found!"});
+    };
+  });
+};
 
-//   // const errors = validationResult(req);
-//   // if (!errors.isEmpty()){
-//   //   const error = new Error('Validation failed, entered data is incorrect.');
-//   //   error.statusCode = 422;
-//   //   throw error;
-//   // }
-
-//   Flashcard.findById(flashcardId)
-//   .then(flashcard => {
-//     if(!flashcard) {
-//       const error = new Error('Could not find a flashcard.');
-//       error.statusCode = 404;
-//       throw error;
-//     }
-//     flashcard.title = title;
-//     flashcard.content = content;
-//     return flashcard.save();
-//   })
-//   .then(result => {
-//     res.status(200).json({message: 'Flashcard updated successfully', flashcard: result});
-//   })
-//   .catch(err => {
-//     if (!err.statusCode) {
-//       err.statusCode = 500;
-//     }
-//     next(err);
-//   });
-
-// };
-
+exports.editFlashcard = (req, res, next) => {
+  const flashcard = new Flashcard({
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content,
+    userInput: ''
+  });
+  Flashcard.updateOne({_id: req.params.id}, flashcard).then(result => {
+    res.status(200).json({message: "Update successful"});
+  });
+};
 

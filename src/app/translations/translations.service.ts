@@ -14,10 +14,9 @@ export class TranslationService {
     this.http.post<any>(
       'http://localhost:3000/api/pons/translation',
       { languages: languagesFromTo, word: userInput }).subscribe((json) => {
-        const isNoTranslation = json == null;
-        if (isNoTranslation) {
-          this.translations.length = 0;
-        } else {
+        this.translations.length = 0;
+        const isTranslationAvailable = json != null;
+        if (isTranslationAvailable) {
           json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
             arab.translations.forEach(trans => {
               const translation: Translation = {
@@ -29,8 +28,8 @@ export class TranslationService {
                 languageTo: languagesFromTo.substring(2, 4),
               };
 
-              translation.suggestedWord = trans.source.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
-              translation.translation = trans.target.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
+              translation.suggestedWord = this.removeHTMLfromJSON(trans.source)
+              translation.translation = this.removeHTMLfromJSON(trans.target);
 
               this.translations.push(translation);
             });
@@ -38,5 +37,9 @@ export class TranslationService {
         }
       });
     return of(this.translations);
+  }
+
+  private removeHTMLfromJSON(input: string) {
+    return input.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
   }
 }

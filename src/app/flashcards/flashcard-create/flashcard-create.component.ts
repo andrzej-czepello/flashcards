@@ -27,7 +27,6 @@ export class FlashcardCreateComponent implements OnInit {
         this.flashcardsService.getFlashcard(this.flashcardId).subscribe(data => {
           this.flashcard = { id: data._id, title: data.title, content: data.content, userInput: '' };
         });
-        console.log("ngOnInit Flashcard: " + this.flashcard);
       } else {
         this.mode = 'create';
         this.flashcardId = null;
@@ -42,13 +41,13 @@ export class FlashcardCreateComponent implements OnInit {
     if (this.mode === 'create') {
       this.flashcardsService.addFlashcard(form.value.title, form.value.content, '');
       this.snackBar.open('Flashcard created!', 'Close', {
-        duration: 2000,
+        duration: 3000,
         panelClass: 'snackBar'
       });
     } else {
       this.flashcardsService.updateFlashcard(this.flashcardId, form.value.title, form.value.content);
       this.snackBar.open('Flashcard updated!', 'Close', {
-        duration: 2000,
+        duration: 3000,
         panelClass: 'snackBar'
       });
     }

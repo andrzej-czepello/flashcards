@@ -1,4 +1,3 @@
-import { Dictionary } from '../dictionaries/dictionary.model';
 import { Flashcard } from './flashcard.model';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -47,8 +46,8 @@ export class FlashcardsService {
     });
   }
 
-  updateFlashcard(id: string, title: string, content: string) { //TODO refactor (delete) oldFlashcardIndex
-    const flashcard: Flashcard = { id: id, title: title, content: content, userInput: '' };
+  updateFlashcard(id: string, title: string, content: string) { // TODO refactor (delete) oldFlashcardIndex
+    const flashcard: Flashcard = { id, title, content, userInput: '' };
     this.http.put('http://localhost:3000/api/flashcards/' + id, flashcard).subscribe(response => {
       const updatedFlashcards = [...this.flashcards];
       const oldFlashcardIndex = updatedFlashcards.findIndex(f => f.id === flashcard.id);
@@ -69,14 +68,4 @@ export class FlashcardsService {
   getFlashcard(flashcardId: string) {
     return this.http.get<{ _id: string, title: string, content: string }>('http://localhost:3000/api/flashcards/' + flashcardId);
   }
-
-  // editFlashcard(flashcardId: string, flashcardToEdit: Flashcard) {
-  //   this.http.put<Flashcard>('http://localhost:3000/api/flashcards/' + flashcardId, flashcardToEdit)
-  //     .subscribe(() => {
-  //       const updatedFlashcards = this.flashcards.filter(flashcard => flashcard.id !== flashcardId);
-  //       this.flashcards = updatedFlashcards;
-  //       this.flashcardsUpdated.next([...this.flashcards]);
-  //     });
-  // }
-
 }

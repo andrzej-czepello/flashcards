@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-translations-list',
   templateUrl: './translations-list.component.html',
-  // styleUrls: ['./translations-list.component.css']
+  styleUrls: ['./translations-list.component.css']
 })
 
 export class TranslationsListComponent implements OnInit {
@@ -32,12 +32,10 @@ export class TranslationsListComponent implements OnInit {
   }
 
   onSearchButton(form: NgForm) {
-    this.translations.length = 0;
     if (form.invalid) {
       return;
     }
     this.userInput = form.value.input;
-    console.log('User input: ' + this.userInput);
     this.languagesFromTo = this.dictionaryService.getFromToLanguages();
     this.translationService.postTranslations(this.userInput, this.languagesFromTo).subscribe(translations => {
       this.translation = form.value;
@@ -54,7 +52,7 @@ export class TranslationsListComponent implements OnInit {
       }
     });
     this.snackBar.open('Flashcard added!', 'Close', {
-      duration: 2000,
+      duration: 3000,
       panelClass: 'mat-primary'
     });
   }

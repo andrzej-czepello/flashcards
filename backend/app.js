@@ -3,17 +3,19 @@ const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
 const flashcardRoutes = require('./routes/flashcards');
-const Flashcard = require('./models/flashcard');
+const dictionaryRoutes = require('./routes/dictionaries');
+const translationsRoutes = require('./routes/translations');
+
+require("dotenv").config();
 
 const app = express();
-
-mongoose.connect("mongodb+srv://andrzej:i7uRS8uY0vE9cmXD@cluster0-zuqln.mongodb.net/node-angular?retryWrites=true&w=majority")
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-zuqln.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}?retryWrites=true&w=majority`)
   .then(result => {
-    app.listen(8080);
+    app.listen(process.env.SERVER_PORT);
   })
   .catch(err => console.log(err));
 
-app.use(bodyParser.json()); // application/json
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,6 +25,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/api', flashcardRoutes);
+app.use('/api', dictionaryRoutes);
+app.use('/api', translationsRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);

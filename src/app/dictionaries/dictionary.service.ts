@@ -1,6 +1,10 @@
+import { environment } from './../../environments/environment';
 import { Dictionary } from './dictionary.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+const BACKEND_URL = environment.apiUrl;
+const BACKEND_DICTIONARY_URL = BACKEND_URL + '/pons/dict';
 
 @Injectable({ providedIn: 'root' })
 export class DictionaryService {
@@ -11,7 +15,7 @@ export class DictionaryService {
   constructor(private http: HttpClient) { }
 
   getDicts(): Dictionary[] {
-    this.http.get<{ message: string, dictionaries: any }>('http://localhost:3000/api/pons/dict').subscribe((json) => {
+    this.http.get<{ message: string, dictionaries: any }>(BACKEND_DICTIONARY_URL).subscribe((json) => {
       json.dictionaries.forEach(element => {
         const langFrom = element.languages[0]; // el
         const dict: Dictionary = { languageFrom: '', languageTo: [{ to: '', key: '' }], translationKey: '' };

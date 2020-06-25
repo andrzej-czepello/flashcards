@@ -1,3 +1,5 @@
+import { FlashcardModuleComponent } from './flashcards-module/flashcard-module.component';
+import { SearchModuleComponent } from './search-module/search-module.component';
 import { TranslationsListComponent } from './translations/translations-list/translations-list.component';
 import { DictionariesListComponent } from './dictionaries/dictionaries-list/dictionaries-list.component';
 import { FlashcardCreateComponent } from './flashcards/flashcard-create/flashcard-create.component';
@@ -12,6 +14,8 @@ import {
   MatExpansionModule,
   MatFormFieldModule,
   MatCheckboxModule,
+  MatSnackBarModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 
 import { MatSelectModule } from '@angular/material/select';
@@ -21,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { FlashcardListComponent } from './flashcards/flashcard-list/flashcard-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -30,9 +35,12 @@ import { HttpClientModule } from '@angular/common/http';
     FlashcardListComponent,
     DictionariesListComponent,
     TranslationsListComponent,
+    SearchModuleComponent,
+    FlashcardModuleComponent,
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -44,6 +52,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatFormFieldModule,
     MatCheckboxModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

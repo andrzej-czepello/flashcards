@@ -9,6 +9,10 @@ const flashcardSchema = new Schema({
   content: {
     type: String,
     required: true
+  },
+  userInput: {
+    type: String,
+    required: false
   }
 });
 

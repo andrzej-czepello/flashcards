@@ -10,40 +10,44 @@ export class DictionaryService {
 
   constructor(private http: HttpClient) { }
 
-  // [
-  //   {
-  //     key: 'deel',
-  //     simple_label: 'grecki «» niemiecki',
-  //     directed_label: { elde: 'grecko » niemiecki', deel: 'niemiecko » grecki' },
-  //     languages: ['el', 'de']
-  //   },
-  //   {
-  //     key: 'deen',
-  //     simple_label: 'angielski «» niemiecki',
-  //     directed_label: { ende: 'angielsko » niemiecki', deen: 'niemiecko » angielski' },
-  //     languages: ['en', 'de']
-  //   },
-  //   ...
-  // ]
   getDicts(): Dictionary[] {
     this.http.get<{ message: string, dictionaries: any }>('http://localhost:3000/api/pons/dict').subscribe((json) => {
       json.dictionaries.forEach(element => {
-        const langFrom = element.languages[0]; // de
+        const langFrom = element.languages[0]; // el
+        const dict: Dictionary = { languageFrom: '', languageTo: [{ to: '', key: '' }], translationKey: '' };
 
-        const dict: Dictionary = { languageFrom: '', languageTo: [] };
-        dict.languageFrom = langFrom;
+        const isDictInList = this.dicts.find(e => e.languageFrom === langFrom);
 
-        json.dictionaries.forEach(language => {
-          if (language.languages[0] === langFrom) {
-            dict.languageTo.push(language.languages[1]);
-          }
-        });
+        if (!isDictInList) {
+          dict.languageFrom = langFrom;
+          json.dictionaries.forEach(language => {
+            if (this.isSearchedLanguageFrom(language.languages[0], langFrom) &&
+              this.isLanguageToKeyIsValid(language.key) && language.languages[1]) {
+              dict.languageTo.push({ to: language.languages[1], key: language.key });
+            } else if (language.languages[1] === langFrom && this.isLanguageToKeyIsValid(language.key) && language.languages[1]) {
+              dict.languageTo.push({ to: language.languages[0], key: language.key });
+            }
+          });
 
-        this.dicts.push(dict);
+          dict.languageTo = this.removeEmptyLanguageTo(dict);
+          this.dicts.push(dict);
+        }
       });
     });
 
     return this.dicts;
+  }
+
+  private isLanguageToKeyIsValid(key: string) {
+    const keyLength = 4;
+    return key.length === keyLength;
+  }
+  private isSearchedLanguageFrom(lang1: string, lang2: string): boolean {
+    return lang1 === lang2;
+  }
+
+  private removeEmptyLanguageTo(dict: Dictionary) {
+    return dict.languageTo.filter(e => e.to !== '');
   }
 
   setFromLanguage(from: string) {
@@ -58,14 +62,16 @@ export class DictionaryService {
     return this.fromLanguage;
   }
 
-
   getToLanguage(): string {
     return this.toLanguage;
   }
 
-
   getFromToLanguages(): string {
-    return this.toLanguage.concat(this.fromLanguage);
+    if (this.toLanguage && this.fromLanguage) {
+      return this.getDicts().find(x => x.languageFrom === this.fromLanguage).languageTo.find(x => x.to === this.toLanguage).key;
+    } else {
+      return '';
+    }
   }
 }
 

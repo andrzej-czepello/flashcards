@@ -1,1 +1,10 @@
-<mat-toolbar color="primary"> My Flashcards</mat-toolbar>
+<mat-toolbar class="main" color="primary">
+  <span>
+    <a mat-button routerLink="/flashcards" routerLinkActive="mat-accent">My flashcards</a>
+  </span>
+  <ul>
+    <li>
+      <a mat-button routerLink="/create" routerLinkActive="mat-accent">Create new flashcard from PONS</a>
+    </li>
+  </ul>
+</mat-toolbar>

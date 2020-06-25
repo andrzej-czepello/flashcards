@@ -1,4 +1,3 @@
-import { Dictionary } from '../dictionaries/dictionary.model';
 import { Flashcard } from './flashcard.model';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -22,6 +21,7 @@ export class FlashcardsService {
           return {
             title: flashcard.title,
             content: flashcard.content,
+            userInput: flashcard.userInput,
             id: flashcard._id
           };
         });
@@ -36,12 +36,23 @@ export class FlashcardsService {
     return this.flashcardsUpdated.asObservable();
   }
 
-  addFlashcard(title: string, content: string) {
-    const flashcard: Flashcard = { id: null, title, content };
+  addFlashcard(title: string, content: string, userInput: string) {
+    const flashcard: Flashcard = { id: null, title, content, userInput };
     this.http.post<{ message: string, flashcardId: string }>('http://localhost:3000/api/flashcards', flashcard).subscribe(responseData => {
       const id = responseData.flashcardId;
       flashcard.id = id;
       this.flashcards.push(flashcard);
+      this.flashcardsUpdated.next([...this.flashcards]);
+    });
+  }
+
+  updateFlashcard(id: string, title: string, content: string) { // TODO refactor (delete) oldFlashcardIndex
+    const flashcard: Flashcard = { id, title, content, userInput: '' };
+    this.http.put('http://localhost:3000/api/flashcards/' + id, flashcard).subscribe(response => {
+      const updatedFlashcards = [...this.flashcards];
+      const oldFlashcardIndex = updatedFlashcards.findIndex(f => f.id === flashcard.id);
+      updatedFlashcards[oldFlashcardIndex] = flashcard;
+      this.flashcards = updatedFlashcards;
       this.flashcardsUpdated.next([...this.flashcards]);
     });
   }
@@ -54,4 +65,7 @@ export class FlashcardsService {
     });
   }
 
+  getFlashcard(flashcardId: string) {
+    return this.http.get<{ _id: string, title: string, content: string }>('http://localhost:3000/api/flashcards/' + flashcardId);
+  }
 }

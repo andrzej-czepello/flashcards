@@ -1,4 +1,5 @@
-export interface Dictionary {
+export class Dictionary {
   languageFrom: string;
-  languageTo: string[];
+  languageTo: { to: string, key: string }[];
+  translationKey: string;
 }

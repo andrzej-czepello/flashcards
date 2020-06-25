@@ -1,22 +1,34 @@
 <h2>TRANSLATIONS</h2>
 <mat-card>
-  <form (submit)="onSubmit(flashcardForm)" #flashcardForm="ngForm">
+  <form #flashcardForm="ngForm" (submit)="onSearchButton(flashcardForm)">
     <mat-form-field>
-      <mat-label>Type word to search</mat-label>
+      <mat-label class="searchBox">Type word to search</mat-label>
       <input matInput type="search" name="input" placeholder="eg. house" required ngModel #input="ngModel">
-      <!-- <mat-error *ngIf="userInput.invalid">type a word</mat-error> -->
     </mat-form-field>
-    <button mat-button>Search!</button>
+    <button mat-raised-button color="primary">Search!</button>
+    <mat-error *ngIf="languagesFromTo === ''">Please first choose languages</mat-error>
   </form>
 </mat-card>
 
-<ng-container *ngFor="let translation of translations">
-  <mat-checkbox color="primary" required ngModel #translation="ngModel" [checked]="translation.isChecked"
-    (change)="translation.isChecked = !translation.isChecked">
-    {{ translation.suggestedWord }} ---
-    {{ translation.translation }} </mat-checkbox><br>
-</ng-container>
-
 <br>
-
-<button mat-raised-button color="primary" (click)="createFlashcards()">Create flashcard(s)</button>
+<h2 *ngIf="languagesFromTo">Results for word: <b>{{ userInput }}</b></h2>
+<br>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<ng-container *ngIf="translations.length > 0 && !isLoading; else elseTemplate">
+  <ng-container *ngFor="let translation of translations; let i = index">
+    <mat-checkbox name="translationCheckbox-{{i}}" color="primary" required ngModel #translation="ngModel"
+      [checked]="translation.isChecked" (change)="translation.isChecked = !translation.isChecked">
+      {{ translation.suggestedWord }} --- {{ translation.translation }} </mat-checkbox>
+    <br>
+  </ng-container>
+  <br>
+  <button mat-raised-button color="primary" (click)="onCreateFlashcardsButton()">Create flashcard(s)</button>
+</ng-container>
+<ng-template #elseTemplate>
+  <ng-container *ngIf="isFirstTranslation; else noTranslationTemplate">
+    Here you will find your translations. Choose translation languages, put a word and hit search button
+  </ng-container>
+  <ng-template #noTranslationTemplate>
+    No translations found for: {{ userInput }}. Try something different
+  </ng-template>
+</ng-template>

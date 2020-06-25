@@ -4,46 +4,58 @@ import { Translation } from './../translation.model';
 import { OnInit, Component } from '@angular/core';
 import { TranslationService } from '../translations.service';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-translations-list',
   templateUrl: './translations-list.component.html',
-  // styleUrls: ['./translations-list.component.css']
+  styleUrls: ['./translations-list.component.css']
 })
 
 export class TranslationsListComponent implements OnInit {
+  translation: string;
   translations: Translation[] = [];
   userInput: string;
-  translation: string;
   languagesFromTo: string;
   checkedTranslations: Translation[] = [];
   isChecked: boolean;
+  isFirstTranslation: boolean;
+  isLoading = false;
 
-  constructor(private translationService: TranslationService,
-    private dictionaryService: DictionaryService,
-    private flashcardService: FlashcardsService) { }
+  constructor(private translationService: TranslationService, private dictionaryService: DictionaryService, private flashcardService: FlashcardsService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.isFirstTranslation = true;
   }
 
-  onSubmit(form: NgForm) {
+  onSearchButton(form: NgForm) {
     if (form.invalid) {
       return;
     }
     this.userInput = form.value.input;
-    console.log('User input: ' + this.userInput);
     this.languagesFromTo = this.dictionaryService.getFromToLanguages();
-    this.translations = this.translationService.postTranslations(this.userInput, this.languagesFromTo);
-    this.translation = form.value.translation;
-    console.log('[Translation component] translation1: ' + this.translation);
-    form.resetForm();
+    if (this.languagesFromTo !== '') {
+      this.isLoading = true;
+      this.translationService.postTranslations(this.userInput, this.languagesFromTo).subscribe(translations => {
+        this.isLoading = false;
+        this.translation = form.value;
+        this.translations = translations;
+      });
+      this.isFirstTranslation = false;
+      form.resetForm();
+    }
   }
 
-  createFlashcards() {
+  onCreateFlashcardsButton() {
     this.translations.forEach(translation => {
       if (translation.isChecked) {
-        this.flashcardService.addFlashcard(translation.suggestedWord, translation.translation);
+        this.flashcardService.addFlashcard(translation.suggestedWord, translation.translation, translation.userInputToSearch);
       }
+    });
+    this.snackBar.open('Flashcard added!', 'Close', {
+      duration: 3000,
+      panelClass: 'mat-primary'
     });
   }
 }

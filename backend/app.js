@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
 const flashcardRoutes = require('./routes/flashcards');
+const Flashcard = require('./models/flashcard');
 
 const app = express();
 

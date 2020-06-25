@@ -1,29 +1,51 @@
-<h2>TRANSLATIONS</h2>
-<mat-card>
-  <form #flashcardForm="ngForm" (submit)="onSearchButton(flashcardForm)">
-    <mat-form-field>
-      <mat-label class="searchBox">Type word to search</mat-label>
-      <input matInput type="search" name="input" placeholder="eg. house" required ngModel #input="ngModel">
-    </mat-form-field>
-    <button mat-raised-button color="primary">Search!</button>
-    <mat-error *ngIf="languagesFromTo === ''">Please first choose languages</mat-error>
-  </form>
-</mat-card>
+<form #flashcardForm="ngForm" (submit)="onSearchButton(flashcardForm)">
+  <h2>TRANSLATE</h2>
+  <mat-form-field>
+    <mat-label class="searchBox">Type word to search</mat-label>
+    <input matInput type="search" name="input" placeholder="eg. house" required ngModel #input="ngModel">
+  </mat-form-field>
+  <button mat-raised-button color="primary" class="searchButton">Search!</button>
+  <mat-error *ngIf="languagesFromTo === ''">Please choose languages</mat-error>
+</form>
 
 <br>
 <h2 *ngIf="languagesFromTo">Results for word: <b>{{ userInput }}</b></h2>
 <br>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<ng-container *ngIf="translations.length > 0 && !isLoading; else elseTemplate">
+<mat-card *ngIf="translations.length > 0 && !isLoading; else elseTemplate">
+
+  <h1>{{ languageFrom }} => {{ languageTo }}</h1>
   <ng-container *ngFor="let translation of translations; let i = index">
-    <mat-checkbox name="translationCheckbox-{{i}}" color="primary" required ngModel #translation="ngModel"
-      [checked]="translation.isChecked" (change)="translation.isChecked = !translation.isChecked">
-      {{ translation.suggestedWord }} --- {{ translation.translation }} </mat-checkbox>
-    <br>
+    <div class="firstTranslation" *ngIf="translation.languageFrom == languageFrom">
+      <mat-checkbox name="translation1Checkbox-{{i}}" color="primary" required [checked]="translation.isChecked"
+        (change)="translation.isChecked = !translation.isChecked">
+        {{ translation.suggestedWord }} --- {{ translation.translation }}
+      </mat-checkbox>
+    </div>
   </ng-container>
+  <ng-container *ngIf=hasNoTranslationsLanguageFrom()>
+    No results in {{ languageFrom }}
+  </ng-container>
+
   <br>
-  <button mat-raised-button color="primary" (click)="onCreateFlashcardsButton()">Create flashcard(s)</button>
-</ng-container>
+  <h1>{{ languageTo }} => {{ languageFrom }}</h1>
+  <ng-container *ngFor="let translation of translations; let i = index">
+    <div class="secondTranslation" *ngIf="translation.languageFrom == languageTo">
+      <mat-checkbox name="translation2Checkbox-{{i}}" color="primary" required [checked]="translation.isChecked"
+        (change)="translation.isChecked = !translation.isChecked">
+        {{ translation.suggestedWord }} --- {{ translation.translation }}
+      </mat-checkbox>
+    </div>
+  </ng-container>
+  <ng-container *ngIf=hasNoTranslationsLanguageTo()>
+    No results in {{ languageTo }}
+  </ng-container>
+
+
+  <br>
+  <button mat-raised-button class="createButton" color="primary" (click)="onCreateFlashcardsButton()">Create
+    flashcard(s)</button>
+</mat-card>
 <ng-template #elseTemplate>
   <ng-container *ngIf="isFirstTranslation; else noTranslationTemplate">
     Here you will find your translations. Choose translation languages, put a word and hit search button

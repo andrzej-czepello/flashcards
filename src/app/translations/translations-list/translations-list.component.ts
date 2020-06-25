@@ -18,6 +18,8 @@ export class TranslationsListComponent implements OnInit {
   translations: Translation[] = [];
   userInput: string;
   languagesFromTo: string;
+  languageFrom: string;
+  languageTo: string;
   checkedTranslations: Translation[] = [];
   isChecked: boolean;
   isFirstTranslation: boolean;
@@ -35,6 +37,8 @@ export class TranslationsListComponent implements OnInit {
     }
     this.userInput = form.value.input;
     this.languagesFromTo = this.dictionaryService.getFromToLanguages();
+    this.languageFrom = this.dictionaryService.getFromLanguage(); //this.languagesFromTo.substring(0, 2);
+    this.languageTo = this.dictionaryService.getToLanguage();
     if (this.languagesFromTo !== '') {
       this.isLoading = true;
       this.translationService.postTranslations(this.userInput, this.languagesFromTo).subscribe(translations => {
@@ -57,5 +61,13 @@ export class TranslationsListComponent implements OnInit {
       duration: 3000,
       panelClass: 'mat-primary'
     });
+  }
+
+  hasNoTranslationsLanguageFrom(): boolean {
+    return this.translations.filter(t => t.languageFrom === this.languageFrom).length === 0;
+  }
+
+  hasNoTranslationsLanguageTo(): boolean {
+    return this.translations.filter(t => t.languageFrom === this.languageTo).length === 0;
   }
 }

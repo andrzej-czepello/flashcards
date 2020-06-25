@@ -1,7 +1,31 @@
 .searchBox{
-  padding-right: 200px;
+  size: 200px;
+}
+
+.searchButton{
+  margin-left: 20px;
 }
 
 mat-spinner {
   margin: auto;
+}
+
+.createButton{
+  margin-left: 30%;
+  margin-right: 30%
+}
+
+.firstTranslation{
+  /* border: 2px solid red; */
+
+
+}
+
+.secondTranslation{
+  /* border: 2px solid black; */
+
+}
+
+mat-card{
+
 }

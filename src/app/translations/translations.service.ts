@@ -17,7 +17,7 @@ export class TranslationService {
 
     this.http.post<any>(BACKEND_TRANSLATION_URL, { languages: languagesFromTo, word: userInput }).subscribe((json) => {
       this.translations.length = 0;
-      const isTranslationAvailable = json != null;
+      const isTranslationAvailable = json != null && json.translations[0];
       if (isTranslationAvailable) {
         json.translations[0].hits[0].roms[0].arabs.forEach(arab => {
           arab.translations.forEach(trans => {
@@ -26,8 +26,8 @@ export class TranslationService {
               suggestedWord: '',
               translation: '',
               isChecked: false,
-              languageFrom: languagesFromTo.substring(0, 2),
-              languageTo: languagesFromTo.substring(2, 4),
+              languageFrom: json.translations[0].lang,
+              languageTo: languagesFromTo.replace(json.translations[0].lang, ''),
             };
 
             translation.suggestedWord = this.removeHTMLfromJSON(trans.source);
@@ -36,6 +36,25 @@ export class TranslationService {
             this.translations.push(translation);
           });
         });
+        if (json.translations[1]) {
+          json.translations[1].hits[0].roms[0].arabs.forEach(arab => {
+            arab.translations.forEach(trans => {
+              const translation: Translation = {
+                userInputToSearch: userInput,
+                suggestedWord: '',
+                translation: '',
+                isChecked: false,
+                languageFrom: json.translations[1].lang,
+                languageTo: languagesFromTo.replace(json.translations[0].lang, '')
+              };
+
+              translation.suggestedWord = this.removeHTMLfromJSON(trans.source);
+              translation.translation = this.removeHTMLfromJSON(trans.target);
+
+              this.translations.push(translation);
+            });
+          });
+        }
       }
     });
     return of(this.translations);

@@ -23,7 +23,6 @@ export class DictionaryService {
           json.dictionaries.forEach(language => {
             if (this.isSearchedLanguageFrom(language.languages[0], langFrom) &&
               this.isLanguageToKeyIsValid(language.key) && language.languages[1]) {
-              console.log("Key: " + language.languages[1] + ' ' + language.key)
               dict.languageTo.push({ to: language.languages[1], key: language.key });
             } else if (language.languages[1] === langFrom && this.isLanguageToKeyIsValid(language.key) && language.languages[1]) {
               dict.languageTo.push({ to: language.languages[0], key: language.key });

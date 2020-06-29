@@ -1,7 +1,32 @@
 .searchBox{
-  padding-right: 200px;
+  size: 200px;
+}
+
+.searchButton{
+  margin-left: 20px;
 }
 
 mat-spinner {
   margin: auto;
+}
+
+.createButton{
+  margin-left: 30%;
+  margin-right: 30%
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }

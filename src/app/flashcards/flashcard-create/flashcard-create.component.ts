@@ -28,7 +28,7 @@ export class FlashcardCreateComponent implements OnInit {
         this.isLoading = true;
         this.flashcardsService.getFlashcard(this.flashcardId).subscribe(data => {
           this.isLoading = false;
-          this.flashcard = { id: data._id, title: data.title, content: data.content, userInput: '' };
+          this.flashcard = { id: data._id, title: data.title, content: data.content };
         });
       } else {
         this.mode = 'create';
@@ -43,7 +43,7 @@ export class FlashcardCreateComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.flashcardsService.addFlashcard(form.value.title, form.value.content, '');
+      this.flashcardsService.addFlashcard(form.value.title, form.value.content);
       this.isLoading = false;
       this.snackBar.open('Flashcard created!', 'Close', {
         duration: 3000,
@@ -61,5 +61,3 @@ export class FlashcardCreateComponent implements OnInit {
     form.resetForm();
   }
 }
-
-

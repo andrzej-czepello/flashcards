@@ -1,5 +1,4 @@
 export interface Translation {
-  // wordToTranslate: string;
   userInputToSearch: string;
   suggestedWord: string;
   translation: string;

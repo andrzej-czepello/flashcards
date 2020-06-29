@@ -10,9 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './flashcard-list.component.html'
 })
 
-export class FlashcardListComponent implements OnInit, OnDestroy {
+export class FlashcardListComponent implements OnInit {
   flashcards: Flashcard[] = [];
-  private flashcardsSub: Subscription;
 
   constructor(public flashcardsService: FlashcardsService, private snackBar: MatSnackBar) { }
 
@@ -29,13 +28,5 @@ export class FlashcardListComponent implements OnInit, OnDestroy {
       duration: 2000,
       panelClass: 'mat-primary'
     });
-  }
-
-  // onEdit(flashcardId: string, flashcardToEdit: Flashcard) {
-  //   this.flashcardsService.editFlashcard(flashcardId, flashcardToEdit);
-  // }
-
-  ngOnDestroy() {
-    // this.flashcardsSub.unsubscribe();
   }
 }

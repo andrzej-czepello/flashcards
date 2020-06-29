@@ -6,54 +6,32 @@ import { FlashcardCreateComponent } from './flashcards/flashcard-create/flashcar
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  MatInputModule,
-  MatCardModule,
-  MatButtonModule,
-  MatToolbarModule,
-  MatExpansionModule,
-  MatFormFieldModule,
-  MatCheckboxModule,
-  MatSnackBarModule,
-  MatProgressSpinnerModule,
-} from '@angular/material';
-
-import { MatSelectModule } from '@angular/material/select';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { FlashcardListComponent } from './flashcards/flashcard-list/flashcard-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FlashcardCreateComponent,
     HeaderComponent,
+    FlashcardCreateComponent,
     FlashcardListComponent,
+    FlashcardModuleComponent,
     DictionariesListComponent,
     TranslationsListComponent,
     SearchModuleComponent,
-    FlashcardModuleComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    MatSelectModule,
     HttpClientModule,
-    MatFormFieldModule,
-    MatCheckboxModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
+    AngularMaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

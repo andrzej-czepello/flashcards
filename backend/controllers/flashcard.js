@@ -4,11 +4,10 @@ exports.createFlashcard = (req, res, next) => {
   const flashcard = new Flashcard({
     title: req.body.title,
     content: req.body.content,
-    userInput: req.body.userInput
   });
   flashcard.save().then(createdFlashcard => {
     res.status(201).json({
-      message: "flashcard added sucessfully",
+      message: "Flashcard added sucessfully",
       flashcardId: createdFlashcard._id
     })
   });
@@ -22,12 +21,6 @@ exports.getFlashcards = (req, res, next) => {
     });
   });
 };
-
-
-
-
-
-
 
 exports.getFlashcard = (req, res, next) => {
   Flashcard.findById(req.params.id).then(flashcard => {

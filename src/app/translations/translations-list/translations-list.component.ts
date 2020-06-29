@@ -37,7 +37,7 @@ export class TranslationsListComponent implements OnInit {
     }
     this.userInput = form.value.input;
     this.languagesFromTo = this.dictionaryService.getFromToLanguages();
-    this.languageFrom = this.dictionaryService.getFromLanguage(); //this.languagesFromTo.substring(0, 2);
+    this.languageFrom = this.dictionaryService.getFromLanguage();
     this.languageTo = this.dictionaryService.getToLanguage();
     if (this.languagesFromTo !== '') {
       this.isLoading = true;
@@ -54,7 +54,7 @@ export class TranslationsListComponent implements OnInit {
   onCreateFlashcardsButton() {
     this.translations.forEach(translation => {
       if (translation.isChecked) {
-        this.flashcardService.addFlashcard(translation.suggestedWord, translation.translation, translation.userInputToSearch);
+        this.flashcardService.addFlashcard(translation.suggestedWord, translation.translation);
       }
     });
     this.snackBar.open('Flashcard added!', 'Close', {

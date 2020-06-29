@@ -17,7 +17,7 @@ export class DictionaryService {
   getDicts(): Dictionary[] {
     this.http.get<{ message: string, dictionaries: any }>(BACKEND_DICTIONARY_URL).subscribe((json) => {
       json.dictionaries.forEach(element => {
-        const langFrom = element.languages[0]; // el
+        const langFrom = element.languages[0];
         const dict: Dictionary = { languageFrom: '', languageTo: [{ to: '', key: '' }], translationKey: '' };
 
         const isDictInList = this.dicts.find(e => e.languageFrom === langFrom);
@@ -78,4 +78,3 @@ export class DictionaryService {
     }
   }
 }
-

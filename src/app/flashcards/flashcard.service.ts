@@ -38,8 +38,8 @@ export class FlashcardsService {
     return this.flashcardsUpdated.asObservable();
   }
 
-  addFlashcard(title: string, content: string, userInput: string) {
-    const flashcard: Flashcard = { id: null, title, content, userInput };
+  addFlashcard(title: string, content: string) {
+    const flashcard: Flashcard = { id: null, title, content };
     this.http.post<{ message: string, flashcardId: string }>(BACKEND_FLASHCARDS_URL, flashcard).subscribe(responseData => {
       const id = responseData.flashcardId;
       flashcard.id = id;
@@ -48,12 +48,10 @@ export class FlashcardsService {
     });
   }
 
-  updateFlashcard(id: string, title: string, content: string) { // TODO refactor (delete) oldFlashcardIndex
-    const flashcard: Flashcard = { id, title, content, userInput: '' };
+  updateFlashcard(id: string, title: string, content: string) {
+    const flashcard: Flashcard = { id, title, content };
     this.http.put(BACKEND_FLASHCARDS_URL + id, flashcard).subscribe(response => {
       const updatedFlashcards = [...this.flashcards];
-      const oldFlashcardIndex = updatedFlashcards.findIndex(f => f.id === flashcard.id);
-      updatedFlashcards[oldFlashcardIndex] = flashcard;
       this.flashcards = updatedFlashcards;
       this.flashcardsUpdated.next([...this.flashcards]);
     });

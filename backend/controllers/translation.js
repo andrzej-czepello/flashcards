@@ -21,5 +21,5 @@ exports.postTranslation = (req, res, next) => {
         translations: []
     });
     }}
-  );
+  )
 }

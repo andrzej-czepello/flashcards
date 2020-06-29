@@ -15,17 +15,18 @@ mat-spinner {
   margin-right: 30%
 }
 
-.firstTranslation{
-  /* border: 2px solid red; */
-
-
+* {
+  box-sizing: border-box;
 }
 
-.secondTranslation{
-  /* border: 2px solid black; */
-
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
 }
 
-mat-card{
-
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }

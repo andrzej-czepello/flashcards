@@ -10,7 +10,12 @@ const flashcardSchema = new Schema({
     type: String,
     required: true
   },
-  userInput: {
+  languageFrom: {
+    type: String,
+    required: false
+  },
+
+  languageTo: {
     type: String,
     required: false
   }

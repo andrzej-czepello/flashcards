@@ -1,7 +1,6 @@
 import { Flashcard } from './../flashcard.model';
 import { FlashcardsService } from './../flashcard.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 

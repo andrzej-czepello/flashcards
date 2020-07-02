@@ -1,7 +1,9 @@
 <mat-accordion multi="true" *ngIf="flashcards.length > 0">
   <mat-expansion-panel *ngFor="let flashcard of flashcards">
-    <mat-expansion-panel-header>
-      <p><b>Title: </b> {{ flashcard.title }} </p>
+    <mat-expansion-panel-header class="right-aligned-header">
+      <mat-panel-title>{{ flashcard.title }}
+      </mat-panel-title>
+      <mat-panel-description> [{{ flashcard.languageFrom }} => {{ flashcard.languageTo }}] </mat-panel-description>
     </mat-expansion-panel-header>
     <p><b>Translation: </b> {{ flashcard.content }}</p>
     <mat-action-row>

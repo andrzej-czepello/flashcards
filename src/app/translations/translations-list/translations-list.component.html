@@ -18,7 +18,7 @@
 <mat-card *ngIf="translations.length > 0 && !isLoading; else elseTemplate">
   <h1>{{ languageFrom }} => {{ languageTo }}</h1>
   <ng-container *ngFor="let translation of translations; let i = index">
-    <div *ngIf="translation.languageFrom == languageFrom">
+    <div *ngIf="isTranslationDirectionFromToTo(translation)">
       <mat-checkbox name="translation1Checkbox-{{i}}" color="primary" required [checked]="translation.isChecked"
         (change)="translation.isChecked = !translation.isChecked">
         {{ translation.suggestedWord }} --- {{ translation.translation }}
@@ -33,7 +33,7 @@
 
   <h1>{{ languageTo }} => {{ languageFrom }}</h1>
   <ng-container *ngFor="let translation of translations; let i = index">
-    <div class="secondTranslation" *ngIf="translation.languageFrom == languageTo">
+    <div class="secondTranslation" *ngIf="!isTranslationDirectionFromToTo(translation)">
       <mat-checkbox name="translation2Checkbox-{{i}}" color="primary" required [checked]="translation.isChecked"
         (change)="translation.isChecked = !translation.isChecked">
         {{ translation.suggestedWord }} --- {{ translation.translation }}

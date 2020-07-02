@@ -25,7 +25,10 @@ export class TranslationsListComponent implements OnInit {
   isFirstTranslation: boolean;
   isLoading = false;
 
-  constructor(private translationService: TranslationService, private dictionaryService: DictionaryService, private flashcardService: FlashcardsService, private snackBar: MatSnackBar) { }
+  constructor(private translationService: TranslationService,
+    private dictionaryService: DictionaryService,
+    private flashcardService: FlashcardsService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.isFirstTranslation = true;
@@ -39,6 +42,8 @@ export class TranslationsListComponent implements OnInit {
     this.languagesFromTo = this.dictionaryService.getFromToLanguages();
     this.languageFrom = this.dictionaryService.getFromLanguage();
     this.languageTo = this.dictionaryService.getToLanguage();
+    console.log('GetFromLanguage()->' + this.languageFrom);
+    console.log('GetToLanguage()->' + this.languageTo);
     if (this.languagesFromTo !== '') {
       this.isLoading = true;
       this.translationService.postTranslations(this.userInput, this.languagesFromTo).subscribe(translations => {
@@ -54,7 +59,14 @@ export class TranslationsListComponent implements OnInit {
   onCreateFlashcardsButton() {
     this.translations.forEach(translation => {
       if (translation.isChecked) {
-        this.flashcardService.addFlashcard(translation.suggestedWord, translation.translation);
+        if (this.isTranslationDirectionFromToTo(translation)) {
+          this.flashcardService.addFlashcard(translation.suggestedWord, translation.translation,
+            translation.languageFrom, this.languageTo);
+        } else {
+          this.flashcardService.addFlashcard(translation.suggestedWord, translation.translation,
+            translation.languageTo, this.languageFrom);
+        }
+
       }
     });
     this.snackBar.open('Flashcard added!', 'Close', {
@@ -63,6 +75,9 @@ export class TranslationsListComponent implements OnInit {
     });
   }
 
+  isTranslationDirectionFromToTo(translation: Translation): boolean {
+    return translation.languageFrom === this.languageFrom;
+  }
   hasNoTranslationsLanguageFrom(): boolean {
     return this.translations.filter(t => t.languageFrom === this.languageFrom).length === 0;
   }

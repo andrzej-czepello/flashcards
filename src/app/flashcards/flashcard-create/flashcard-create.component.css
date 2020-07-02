@@ -6,3 +6,34 @@ textarea {
 mat-spinner {
   margin: auto;
 }
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+  width: inherit;
+}
+
+.title {
+  width: 80%;
+  margin-right: 20px;
+}
+
+
+.languageFrom {
+  width: 15%;
+}
+
+.content {
+  width: 80%;
+  margin-right: 20px;
+}
+
+
+.languageTo {
+  width: 15%;
+}

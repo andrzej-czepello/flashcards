@@ -4,6 +4,8 @@ exports.createFlashcard = (req, res, next) => {
   const flashcard = new Flashcard({
     title: req.body.title,
     content: req.body.content,
+    languageFrom: req.body.languageFrom,
+    languageTo: req.body.languageTo
   });
   flashcard.save().then(createdFlashcard => {
     res.status(201).json({
@@ -37,7 +39,8 @@ exports.editFlashcard = (req, res, next) => {
     _id: req.body.id,
     title: req.body.title,
     content: req.body.content,
-    userInput: ''
+    languageFrom: req.body.languageFrom,
+    languageTo: req.body.languageTo
   });
   Flashcard.updateOne({_id: req.params.id}, flashcard).then(result => {
     res.status(200).json({message: "Update successful"});

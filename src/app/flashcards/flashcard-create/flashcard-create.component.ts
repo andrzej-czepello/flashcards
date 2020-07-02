@@ -18,7 +18,10 @@ export class FlashcardCreateComponent implements OnInit {
   private mode = 'create';
   private flashcardId: string;
 
-  constructor(public flashcardsService: FlashcardsService, private snackBar: MatSnackBar, public route: ActivatedRoute, private router: Router) { }
+  constructor(public flashcardsService: FlashcardsService,
+    private snackBar: MatSnackBar,
+    public route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -28,7 +31,13 @@ export class FlashcardCreateComponent implements OnInit {
         this.isLoading = true;
         this.flashcardsService.getFlashcard(this.flashcardId).subscribe(data => {
           this.isLoading = false;
-          this.flashcard = { id: data._id, title: data.title, content: data.content };
+          this.flashcard = {
+            id: data._id,
+            title: data.title,
+            content: data.content,
+            languageFrom: data.languageFrom,
+            languageTo: data.languageTo
+          };
         });
       } else {
         this.mode = 'create';
@@ -43,14 +52,15 @@ export class FlashcardCreateComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.flashcardsService.addFlashcard(form.value.title, form.value.content);
+      this.flashcardsService.addFlashcard(form.value.title, form.value.content, form.value.languageFrom, form.value.languageTo);
       this.isLoading = false;
       this.snackBar.open('Flashcard created!', 'Close', {
         duration: 3000,
         panelClass: 'snackBar'
       });
     } else {
-      this.flashcardsService.updateFlashcard(this.flashcardId, form.value.title, form.value.content);
+      this.flashcardsService.updateFlashcard(this.flashcardId, form.value.title, form.value.content,
+        form.value.languageFrom, form.value.languageTo);
       this.isLoading = false;
       this.snackBar.open('Flashcard updated!', 'Close', {
         duration: 3000,

@@ -21,10 +21,12 @@ export class FlashcardsService {
       .pipe(map((flashcardData) => {
         return flashcardData.flashcards.map(flashcard => {
           return {
+            id: flashcard._id,
             title: flashcard.title,
             content: flashcard.content,
             userInput: flashcard.userInput,
-            id: flashcard._id
+            languageFrom: flashcard.languageFrom,
+            languageTo: flashcard.languageTo,
           };
         });
       }))
@@ -38,8 +40,8 @@ export class FlashcardsService {
     return this.flashcardsUpdated.asObservable();
   }
 
-  addFlashcard(title: string, content: string) {
-    const flashcard: Flashcard = { id: null, title, content };
+  addFlashcard(title: string, content: string, languageFrom: string, languageTo: string) {
+    const flashcard: Flashcard = { id: null, title, content, languageFrom, languageTo };
     this.http.post<{ message: string, flashcardId: string }>(BACKEND_FLASHCARDS_URL, flashcard).subscribe(responseData => {
       const id = responseData.flashcardId;
       flashcard.id = id;
@@ -48,8 +50,8 @@ export class FlashcardsService {
     });
   }
 
-  updateFlashcard(id: string, title: string, content: string) {
-    const flashcard: Flashcard = { id, title, content };
+  updateFlashcard(id: string, title: string, content: string, languageFrom: string, languageTo: string) {
+    const flashcard: Flashcard = { id, title, content, languageFrom, languageTo };
     this.http.put(BACKEND_FLASHCARDS_URL + id, flashcard).subscribe(response => {
       const updatedFlashcards = [...this.flashcards];
       this.flashcards = updatedFlashcards;
@@ -66,6 +68,6 @@ export class FlashcardsService {
   }
 
   getFlashcard(flashcardId: string) {
-    return this.http.get<{ _id: string, title: string, content: string }>(BACKEND_FLASHCARDS_URL + flashcardId);
+    return this.http.get<{ _id: string, title: string, content: string, languageFrom: string, languageTo: string }>(BACKEND_FLASHCARDS_URL + flashcardId);
   }
 }
